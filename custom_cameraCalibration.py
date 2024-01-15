@@ -30,11 +30,11 @@ import cv2 as cv
 
 chessboardSize = (24, 17)
 # [Q] Please discuss the meaning of the paramter
-# [A] 실제는 25x 18인데 왜지/
+# [A] 실제 보드 크기는 25x 18인데 corner의 개수를 말하는 것이므로 각각 -1을 해줘야함.
 
 frameSize = (1440, 1080)
 # [Q] Please discuss the meaning of the paramter
-# [A] 진짜 이미지 사이즈 ㅇㅇ
+# [A] 진짜 이미지 사이즈
 
 
 # termination criteria
@@ -46,18 +46,23 @@ criteria = (cv.TERM_CRITERIA_EPS + cv.TERM_CRITERIA_MAX_ITER, 30, 0.001)
 # prepare object points, like (0,0,0), (1,0,0), (2,0,0) ....,(6,5,0)
 objp = np.zeros((chessboardSize[0] * chessboardSize[1], 3), np.float32)
 objp[:, :2] = np.mgrid[0:chessboardSize[0], 0:chessboardSize[1]].T.reshape(-1, 2)
+# from pprint import pprint
+# pprint(objp[23:])
+# print(objp.shape)
 
 size_of_chessboard_squares_mm = 20
 objp = objp * size_of_chessboard_squares_mm
 # [Q] Please discuss the meaning of the paramter. Specify the unit of it.
+# [A]
+# 실제 체스보드 사진이 1만큼의 간격을 가지고 있지는 않을 것임. 따라서 20이라는 최소 간격을 지정해줬다.
 
 
 # Arrays to store object points and image points from all the images.
-objpoints = []  # 3d point in real world space
-# [Q] How many points? -> 21
+objpoints = []  # 3d point in real world space!!
+# [Q] How many points? [A] 21
 
 imgpoints = []  # 2d points in image plane.
-# [Q] How many points? -> 21
+# [Q] How many points? [A] 21
 
 
 images = glob.glob('./samples/*.png')           # [Q] How many images? [A] 21
